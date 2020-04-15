@@ -8,6 +8,6 @@
      "editor.formatOnPaste": false,
      "editor.formatOnSave": true
      },
-    "python.formatting.blackArgs": ["--line-length", "120"],
-    "python.linting.flake8Args": ["--line-length", "120","--ignore=W503,"]
+    "python.formatting.blackArgs": ["--line-length", "100"],
+    "python.linting.flake8Args": ["--line-length", "100","--ignore=W503,"]
 }

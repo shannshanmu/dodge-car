@@ -54,9 +54,9 @@ class Intro_world(World):
 
     def add_sequence_sprite(self, s):
         if len(self.sequence_sprite) == 0:
-            s.visible = True
+            s[0].visible = True
         else:
-            s.visible = False
+            s[0].visible = False
         # print("Added "+str(s.text)+str(s.visible))
         self.sequence_sprite.append(s)
 
@@ -64,24 +64,32 @@ class Intro_world(World):
         i = 0
         active_sprite_index = 0
         if type(event) != int:
+            pygame.time.set_timer(pygame.USEREVENT + 2, self.sequence_sprite[0][0].time, True)
             if event.type == pygame.USEREVENT + 2:
                 while i < (len(self.sequence_sprite) - 1):
-                    if self.sequence_sprite[i].visible:
-                        self.sequence_sprite[i].visible = False
-                        self.sequence_sprite[i + 1].visible = True
+                    if self.sequence_sprite[i][0].visible:
+                        self.sequence_sprite[i][0].visible = False
+                        self.sequence_sprite[i + 1][0].visible = True
                         active_sprite_index = i + 1
                         i += 2
                     else:
                         i += 1
-                pygame.time.set_timer(pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index].time, True)
+                pygame.time.set_timer(
+                    pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index][0].time, True
+                )
             if active_sprite_index == len(self.sequence_sprite) - 1:
-                pygame.time.set_timer(pygame.USEREVENT + 1, self.sequence_sprite[active_sprite_index].time + 1, True)
+                pygame.time.set_timer(
+                    pygame.USEREVENT + 1,
+                    self.sequence_sprite[active_sprite_index][0].time + 1,
+                    True,
+                )
 
     def draw(self, target_surface):
         super(Intro_world, self).draw(target_surface)
-        for s in self.sequence_sprite:
-            if s.visible:
-                s.draw(target_surface)
+        for sprite_list in self.sequence_sprite:
+            if sprite_list[0].visible:
+                for sprite in sprite_list:
+                    sprite.draw(target_surface)
 
 
 class Sprite:
@@ -189,21 +197,46 @@ class Road_sprite(Sprite):
         self.blocks = []
         self.type = "road"
         self.dodged_count = 0
-        self.dodged = Text_sprite("Dodged: " + str(0), "assets/fonts/countdown_Font.ttf", 25, 0, 25, constants.BLACK, 0)
+        self.dodged = Text_sprite(
+            "Dodged: " + str(0),
+            "assets/fonts/FasterOne.ttf",
+            constants.corner_small_text_size,
+            0,
+            25,
+            constants.BLACK,
+            0,
+        )
         try:
             with open("highscores.dat", "rb") as file:
                 self.highscore = pickle.load(file)
         except FileNotFoundError:
             self.highscore = 0
         self.global_highscore = Text_sprite(
-            "Highscore: " + str(self.highscore), "assets/fonts/countdown_Font.ttf", 25, 0, 0, constants.BLACK, 0
+            "Highscore: " + str(self.highscore),
+            "assets/fonts/FasterOne.ttf",
+            constants.corner_small_text_size,
+            0,
+            0,
+            constants.BLACK,
+            0,
+        )
+        self.DodgeCar_corner = Text_sprite(
+            "DodgeCar",
+            "assets/fonts/EndeavourForever.ttf",
+            constants.corner_small_text_size,
+            constants.display_width - 140,
+            10,
+            constants.BLACK,
+            2500,
         )
 
     def initialise_road(self):
         divider_x = self.x_max / 2 - self.divider_width / 2
         divider_y = 0
         while divider_y < self.y_max:
-            d1 = Divider_sprite(divider_x, divider_y, self.divider_width, self.divider_height, self.colour,)
+            d1 = Divider_sprite(
+                divider_x, divider_y, self.divider_width, self.divider_height, self.colour,
+            )
             self.dividers.append(d1)
             divider_y += self.divider_height + self.spacing
         self.blocks.append(Block_sprite(constants.BLUE, self.x_max, self.y_max))
@@ -251,6 +284,7 @@ class Road_sprite(Sprite):
             b.draw(target_surface)
         self.dodged.draw(target_surface)
         self.global_highscore.draw(target_surface)
+        self.DodgeCar_corner.draw(target_surface)
 
     def detect_collision(self, car):
         for b in self.blocks:

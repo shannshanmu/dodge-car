@@ -1,6 +1,7 @@
 import models
 import constants
 import pygame
+import emoji
 
 introComplete = False
 carUP = pygame.image.load("assets/images/cars/flame_decorated_F1_cars_small/red_flaming_up.png")
@@ -10,37 +11,92 @@ carUP = pygame.image.load("assets/images/cars/flame_decorated_F1_cars_small/red_
 
 def create_intro_world(target_surface):
     iw = models.Intro_world(constants.GREY)
-    DodgeCar = models.Text_sprite(
-        "DodgeCar!",
-        "assets/fonts/countdown_Font.ttf",
-        constants.title_text_size,
-        0,
-        constants.display_height / 2 - constants.title_text_size / 2,
-        constants.DARK_BLUE,
-        2500,
+    dividers = models.Road_sprite(
+        constants.divider_width, constants.divider_height, constants.WHITE_SMOKE, target_surface
     )
-    Number3 = models.Text_sprite(3, "assets/fonts/countdown_Font.ttf", 300, 0 + 25, 30, constants.RED, 750)
-    Number2 = models.Text_sprite(2, "assets/fonts/countdown_Font.ttf", 300, 250 + 25, 30, constants.RED, 750)
-    Number1 = models.Text_sprite(1, "assets/fonts/countdown_Font.ttf", 300, 500 + 20, 30, constants.RED, 750)
+    dividers.initialise_road()
+    DodgeCar_title = models.Text_sprite(
+        "DodgeCar",
+        "assets/fonts/EndeavourForever.ttf",
+        constants.title_big_text_size,
+        0,
+        constants.display_height / 2 - constants.title_big_text_size / 2,
+        constants.DARK_BLUE,
+        2000,
+    )
+
+    Instructions = [
+        models.Text_sprite(
+            "Use",
+            constants.FasterOneFontPath,
+            constants.instructions_text_size,
+            50,
+            200,
+            constants.BLACK,
+            constants.instructions_time,
+        ),
+        models.Text_sprite(
+            emoji.emojize(":left_arrow:"),
+            "assets/fonts/NotoColorEmoji.ttf",
+            constants.instructions_text_size,
+            250,
+            200,
+            constants.BLACK,
+            constants.instructions_time,
+        ),
+        models.Text_sprite(
+            emoji.emojize(":right_arrow:"),
+            "assets/fonts/NotoColorEmoji.ttf",
+            constants.instructions_text_size,
+            410,
+            200,
+            constants.BLACK,
+            constants.instructions_time,
+        ),
+        models.Text_sprite(
+            "to",
+            constants.FasterOneFontPath,
+            constants.instructions_text_size,
+            550,
+            200,
+            constants.BLACK,
+            constants.instructions_time,
+        ),
+        models.Text_sprite(
+            "move left/right",
+            constants.FasterOneFontPath,
+            constants.instructions_text_size,
+            0,
+            400,
+            constants.BLACK,
+            constants.instructions_time,
+        ),
+    ]
+    Number3 = models.Text_sprite(
+        3, constants.FasterOneFontPath, 300, 0 + 25, 30, constants.RED, 750
+    )
+    Number2 = models.Text_sprite(
+        2, constants.FasterOneFontPath, 300, 250 + 25, 30, constants.RED, 750
+    )
+    Number1 = models.Text_sprite(
+        1, constants.FasterOneFontPath, 300, 500 + 20, 30, constants.RED, 750
+    )
     GO = models.Text_sprite(
         "GO!",
-        "assets/fonts/countdown_Font.ttf",
+        "assets/fonts/Thunderbold.otf",
         300,
         constants.display_width / 2 - 230,
         constants.display_height / 2,
         constants.GREEN,
         750,
     )
-    dividers = models.Road_sprite(
-        constants.divider_width, constants.divider_height, constants.WHITE_SMOKE, target_surface
-    )
-    dividers.initialise_road()
     iw.add_sprite(dividers)
-    iw.add_sequence_sprite(DodgeCar)
-    iw.add_sequence_sprite(Number3)
-    iw.add_sequence_sprite(Number2)
-    iw.add_sequence_sprite(Number1)
-    iw.add_sequence_sprite(GO)
+    iw.add_sequence_sprite([DodgeCar_title])
+    iw.add_sequence_sprite(Instructions)
+    iw.add_sequence_sprite([Number3])
+    iw.add_sequence_sprite([Number2])
+    iw.add_sequence_sprite([Number1])
+    iw.add_sequence_sprite([GO])
     return iw
 
 
@@ -50,6 +106,7 @@ def create_world(target_surface):
         constants.divider_width, constants.divider_height, constants.WHITE_SMOKE, target_surface
     )
     dividers.initialise_road()
+
     car = models.Car_sprite(
         "assets/images/cars/flame_decorated_F1_cars_small/red_flaming_up.png",
         "assets/images/cars/flame_decorated_F1_cars_small/red_flaming_crashed.png",
@@ -66,7 +123,6 @@ def game_loop(intro_world, main_world, target_surface):
     global introComplete
     if not introComplete:
         world = intro_world
-        pygame.time.set_timer(pygame.USEREVENT + 2, 1000, True)
     while not gameExit:
         if introComplete:
             world = main_world
