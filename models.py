@@ -62,16 +62,20 @@ class Intro_world(World):
 
     def update(self, event):
         i = 0
+        active_sprite_index = 0
         if type(event) != int:
             if event.type == pygame.USEREVENT + 2:
                 while i < (len(self.sequence_sprite) - 1):
                     if self.sequence_sprite[i].visible:
                         self.sequence_sprite[i].visible = False
                         self.sequence_sprite[i + 1].visible = True
+                        active_sprite_index = i + 1
                         i += 2
                     else:
                         i += 1
-                pygame.time.set_timer(pygame.USEREVENT + 2, 1000, True)
+                pygame.time.set_timer(pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index].time, True)
+            if active_sprite_index == len(self.sequence_sprite) - 1:
+                pygame.time.set_timer(pygame.USEREVENT + 1, self.sequence_sprite[active_sprite_index].time + 1, True)
 
     def draw(self, target_surface):
         super(Intro_world, self).draw(target_surface)
@@ -185,14 +189,14 @@ class Road_sprite(Sprite):
         self.blocks = []
         self.type = "road"
         self.dodged_count = 0
-        self.dodged = Text_sprite("Dodged: " + str(0), "assets/fonts/countdown_Font.ttf", 25, 0, 25, constants.BLACK,)
+        self.dodged = Text_sprite("Dodged: " + str(0), "assets/fonts/countdown_Font.ttf", 25, 0, 25, constants.BLACK, 0)
         try:
             with open("highscores.dat", "rb") as file:
                 self.highscore = pickle.load(file)
         except FileNotFoundError:
             self.highscore = 0
         self.global_highscore = Text_sprite(
-            "Highscore: " + str(self.highscore), "assets/fonts/countdown_Font.ttf", 25, 0, 0, constants.BLACK,
+            "Highscore: " + str(self.highscore), "assets/fonts/countdown_Font.ttf", 25, 0, 0, constants.BLACK, 0
         )
 
     def initialise_road(self):
@@ -326,7 +330,7 @@ class Car_sprite(Sprite):
 
 
 class Text_sprite(Sprite):
-    def __init__(self, text, font, size, x, y, colour):
+    def __init__(self, text, font, size, x, y, colour, time):
         super(Text_sprite, self).__init__()
         self.colour = colour
         self.text = text
@@ -335,6 +339,7 @@ class Text_sprite(Sprite):
         self.x = x
         self.y = y
         self.type = "text"
+        self.time = time
 
     def draw(self, target_surface):
         font_surface = self.font.render(str(self.text), True, self.colour)

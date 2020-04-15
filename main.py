@@ -17,10 +17,11 @@ def create_intro_world(target_surface):
         0,
         constants.display_height / 2 - constants.title_text_size / 2,
         constants.DARK_BLUE,
+        2500,
     )
-    Number3 = models.Text_sprite(3, "assets/fonts/countdown_Font.ttf", 300, 0 + 25, 30, constants.RED)
-    Number2 = models.Text_sprite(2, "assets/fonts/countdown_Font.ttf", 300, 250 + 25, 30, constants.RED)
-    Number1 = models.Text_sprite(1, "assets/fonts/countdown_Font.ttf", 300, 500 + 20, 30, constants.RED)
+    Number3 = models.Text_sprite(3, "assets/fonts/countdown_Font.ttf", 300, 0 + 25, 30, constants.RED, 750)
+    Number2 = models.Text_sprite(2, "assets/fonts/countdown_Font.ttf", 300, 250 + 25, 30, constants.RED, 750)
+    Number1 = models.Text_sprite(1, "assets/fonts/countdown_Font.ttf", 300, 500 + 20, 30, constants.RED, 750)
     GO = models.Text_sprite(
         "GO!",
         "assets/fonts/countdown_Font.ttf",
@@ -28,6 +29,7 @@ def create_intro_world(target_surface):
         constants.display_width / 2 - 230,
         constants.display_height / 2,
         constants.GREEN,
+        750,
     )
     dividers = models.Road_sprite(
         constants.divider_width, constants.divider_height, constants.WHITE_SMOKE, target_surface
@@ -91,7 +93,6 @@ def main():
     pygame.display.set_caption("DodgeCar!")
     intro_world = create_intro_world(gameDisplay)
     world = create_world(gameDisplay)
-    pygame.time.set_timer(pygame.USEREVENT + 1, 5000, True)
     game_loop(intro_world, world, gameDisplay)
 
 
