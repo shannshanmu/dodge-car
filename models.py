@@ -11,6 +11,8 @@ class World:
         self.car_sprite = ""
         self.road_sprite = ""
         self.ended = False
+        self.end_world_crashed = ""
+        self.end_world_emoji = ""
 
     def update(self, event):
         if not self.ended:
@@ -18,12 +20,19 @@ class World:
                 s.update(event)
             self.road_sprite.update(event)
             self.car_sprite.update(event)
+        else:
+            self.end_world_crashed.visible = True
+            self.end_world_emoji.visible = True
 
     def add_sprite(self, s):
         if s.type == "car":
             self.car_sprite = s
         elif s.type == "road":
             self.road_sprite = s
+        elif s.type == "end_world_crashed":
+            self.end_world_crashed = s
+        elif s.type == "end_world_emoji":
+            self.end_world_emoji = s
         else:
             self.sprite_list.append(s)
 
@@ -38,6 +47,12 @@ class World:
         if type(self.car_sprite) == Car_sprite:
             if self.car_sprite.visible:
                 self.car_sprite.draw(target_surface)
+        if type(self.end_world_crashed) == Text_sprite:
+            if self.end_world_crashed.visible:
+                self.end_world_crashed.draw(target_surface)
+        if type(self.end_world_emoji) == Text_sprite:
+            if self.end_world_emoji.visible:
+                self.end_world_emoji.draw(target_surface)
 
     def detect_collision(self):
         if type(self.road_sprite) == Road_sprite and type(self.car_sprite) == Car_sprite:
@@ -229,6 +244,9 @@ class Road_sprite(Sprite):
             constants.BLACK,
             2500,
         )
+        self.spacebar_again = Text_sprite(
+            "Press space to play again.", constants.FasterOneFontPath, 25, 250, 0, constants.RED, 0,
+        )
 
     def initialise_road(self):
         divider_x = self.x_max / 2 - self.divider_width / 2
@@ -285,6 +303,7 @@ class Road_sprite(Sprite):
         self.dodged.draw(target_surface)
         self.global_highscore.draw(target_surface)
         self.DodgeCar_corner.draw(target_surface)
+        self.spacebar_again.draw(target_surface)
 
     def detect_collision(self, car):
         for b in self.blocks:

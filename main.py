@@ -1,7 +1,7 @@
 import models
 import constants
 import pygame
-import emoji
+import random
 
 introComplete = False
 carUP = pygame.image.load("assets/images/cars/flame_decorated_F1_cars_small/red_flaming_up.png")
@@ -36,8 +36,8 @@ def create_intro_world(target_surface):
             constants.instructions_time,
         ),
         models.Text_sprite(
-            emoji.emojize(":left_arrow:"),
-            "assets/fonts/NotoColorEmoji.ttf",
+            constants.left_arrow,
+            constants.NotoColorEmojiFontPath,
             constants.instructions_text_size,
             250,
             200,
@@ -45,8 +45,8 @@ def create_intro_world(target_surface):
             constants.instructions_time,
         ),
         models.Text_sprite(
-            emoji.emojize(":right_arrow:"),
-            "assets/fonts/NotoColorEmoji.ttf",
+            constants.right_arrow,
+            constants.NotoColorEmojiFontPath,
             constants.instructions_text_size,
             410,
             200,
@@ -106,14 +106,37 @@ def create_world(target_surface):
         constants.divider_width, constants.divider_height, constants.WHITE_SMOKE, target_surface
     )
     dividers.initialise_road()
-
     car = models.Car_sprite(
         "assets/images/cars/flame_decorated_F1_cars_small/red_flaming_up.png",
         "assets/images/cars/flame_decorated_F1_cars_small/red_flaming_crashed.png",
         target_surface,
     )
+    crashed_text = models.Text_sprite(
+        "You Crashed",
+        constants.FasterOneFontPath,
+        80,
+        0,
+        constants.display_height / 2,
+        constants.RED,
+        0,
+    )
+    end_emoji = models.Text_sprite(
+        constants.emojis[random.randint(3, 15)],
+        constants.NotoColorEmojiFontPath,
+        80,
+        constants.display_width - 140,
+        constants.display_height / 2 - 30,
+        constants.BLACK,
+        0,
+    )
+    end_emoji.type = "end_world_emoji"
+    crashed_text.type = "end_world_crashed"
+    end_emoji.visible = False
+    crashed_text.visible = False
     w.add_sprite(dividers)
     w.add_sprite(car)
+    w.add_sprite(crashed_text)
+    w.add_sprite(end_emoji)
     return w
 
 
@@ -131,6 +154,8 @@ def game_loop(intro_world, main_world, target_surface):
                 gameExit = True
             elif event.type == pygame.USEREVENT + 1:
                 introComplete = True
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                world = create_world(target_surface)
             else:
                 world.update(event)
         world.update(pygame.NOEVENT)
