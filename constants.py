@@ -1,5 +1,12 @@
 import emoji
 import pygame
+import sys
+import os
+
+if getattr(sys, "frozen", False):
+    basedir = sys._MEIPASS
+else:
+    basedir = os.path.dirname(os.path.abspath(__file__))
 
 display_width = 800
 display_height = 700
@@ -14,14 +21,14 @@ title_big_text_size = 140
 title_time = 2500
 corner_small_text_size = 25
 instructions_text_size = 80
-instructions_time = 5000
-countdown_time = 750
+instructions_time = 5050
+countdown_time = 700
 countdown_time_together = countdown_time * 4
 intro_time_before_countdown = title_time + instructions_time
 
 
-FasterOneFontPath = "assets/fonts/FasterOne.ttf"
-NotoColorEmojiFontPath = "assets/fonts/NotoColorEmoji.ttf"
+FasterOneFontPath = basedir + "/assets/fonts/FasterOne.ttf"
+NotoColorEmojiFontPath = basedir + "/assets/fonts/NotoColorEmoji.ttf"
 two_arrows_width_together = 475
 # if two arrows are next to each other in one Text_sprite, this is their total width
 

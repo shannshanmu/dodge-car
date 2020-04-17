@@ -2,6 +2,13 @@ import pygame
 import random
 import pickle
 import constants
+import sys
+import os
+
+if getattr(sys, "frozen", False):
+    basedir = sys._MEIPASS
+else:
+    basedir = os.path.dirname(os.path.abspath(__file__))
 
 
 class World:
@@ -92,7 +99,7 @@ class Intro_world(World):
                     pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index][0].time, True
                 )
             if active_sprite_index == 2:
-                pygame.mixer.music.load("assets/music/start/321GO.ogg")
+                pygame.mixer.music.load(basedir + "/assets/music/start/321GO.ogg")
                 pygame.mixer.music.play(0)
             if active_sprite_index == len(self.sequence_sprite) - 1:
                 pygame.time.set_timer(
@@ -216,7 +223,7 @@ class Road_sprite(Sprite):
         self.dodged_count = 0
         self.dodged = Text_sprite(
             "Dodged: " + str(0),
-            "assets/fonts/FasterOne.ttf",
+            basedir + "/assets/fonts/FasterOne.ttf",
             constants.corner_small_text_size,
             0,
             25,
@@ -230,7 +237,7 @@ class Road_sprite(Sprite):
             self.highscore = 0
         self.global_highscore = Text_sprite(
             "Highscore: " + str(self.highscore),
-            "assets/fonts/FasterOne.ttf",
+            basedir + "/assets/fonts/FasterOne.ttf",
             constants.corner_small_text_size,
             0,
             0,
@@ -239,7 +246,7 @@ class Road_sprite(Sprite):
         )
         self.DodgeCar_corner = Text_sprite(
             "DodgeCar",
-            "assets/fonts/EndeavourForever.ttf",
+            basedir + "/assets/fonts/EndeavourForever.ttf",
             constants.corner_small_text_size,
             constants.display_width - 140,
             10,

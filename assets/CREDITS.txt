@@ -7,8 +7,9 @@ Cyber_Race.ogg (converted from orig. .mp3) by jammerboy70 (https://freesound.org
 Game_End_Fade_Out.ogg (converted from orig. .mp3) by josepharaoh99 (https://freesound.org/people/josepharaoh99/sounds/364929/) for the end
 321GO.ogg (converted from orig. .mp3) by  steel2008 (https://freesound.org/people/steel2008/sounds/231277/) for the start
 
-images from PinClipart.com: 
-https://www.pinclipart.com/pindetail/ooTbhm_formula-1-clipart-transparent-formula-1-car-top/ (creator unknown)
+images: 
+PinClipart.com - https://www.pinclipart.com/pindetail/ooTbhm_formula-1-clipart-transparent-formula-1-car-top/ (creator unknown)
+the crashed_car image is a rotated version of the original image, with some pixelated fire on top: http://pixelartmaker.com/art/9f7a06e5ea7da2c
 
 fonts from various websites:
 1001fonts.com - Pizzadude(Jakob Fischer at jakob@pizzadude.dk, website: http://pizzadude.dk/site/) for EndeavourForever.ttf, found on https://www.1001fonts.com/endeavour-forever-font.html
