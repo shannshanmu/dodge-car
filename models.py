@@ -79,7 +79,6 @@ class Intro_world(World):
         i = 0
         active_sprite_index = 0
         if type(event) != int:
-            pygame.time.set_timer(pygame.USEREVENT + 2, self.sequence_sprite[0][0].time, True)
             if event.type == pygame.USEREVENT + 2:
                 while i < (len(self.sequence_sprite) - 1):
                     if self.sequence_sprite[i][0].visible:
@@ -92,6 +91,9 @@ class Intro_world(World):
                 pygame.time.set_timer(
                     pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index][0].time, True
                 )
+            if active_sprite_index == 2:
+                pygame.mixer.music.load("assets/music/start/321GO.ogg")
+                pygame.mixer.music.play(0)
             if active_sprite_index == len(self.sequence_sprite) - 1:
                 pygame.time.set_timer(
                     pygame.USEREVENT + 1,
@@ -245,7 +247,7 @@ class Road_sprite(Sprite):
             2500,
         )
         self.spacebar_again = Text_sprite(
-            "Press space to play again.", constants.FasterOneFontPath, 25, 250, 0, constants.RED, 0,
+            "Press space to restart.", constants.FasterOneFontPath, 25, 250, 0, constants.GREEN, 0,
         )
 
     def initialise_road(self):

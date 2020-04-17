@@ -2,6 +2,7 @@ import models
 import constants
 import pygame
 import random
+import time
 
 introComplete = False
 carUP = pygame.image.load("assets/images/cars/flame_decorated_F1_cars_small/red_flaming_up.png")
@@ -22,7 +23,7 @@ def create_intro_world(target_surface):
         0,
         constants.display_height / 2 - constants.title_big_text_size / 2,
         constants.DARK_BLUE,
-        2000,
+        constants.title_time,
     )
 
     Instructions = [
@@ -73,13 +74,13 @@ def create_intro_world(target_surface):
         ),
     ]
     Number3 = models.Text_sprite(
-        3, constants.FasterOneFontPath, 300, 0 + 25, 30, constants.RED, 750
+        3, constants.FasterOneFontPath, 300, 0 + 25, 30, constants.RED, constants.countdown_time
     )
     Number2 = models.Text_sprite(
-        2, constants.FasterOneFontPath, 300, 250 + 25, 30, constants.RED, 750
+        2, constants.FasterOneFontPath, 300, 250 + 25, 30, constants.RED, constants.countdown_time
     )
     Number1 = models.Text_sprite(
-        1, constants.FasterOneFontPath, 300, 500 + 20, 30, constants.RED, 750
+        1, constants.FasterOneFontPath, 300, 500 + 20, 30, constants.RED, constants.countdown_time
     )
     GO = models.Text_sprite(
         "GO!",
@@ -88,7 +89,7 @@ def create_intro_world(target_surface):
         constants.display_width / 2 - 230,
         constants.display_height / 2,
         constants.GREEN,
-        750,
+        constants.countdown_time,
     )
     iw.add_sprite(dividers)
     iw.add_sequence_sprite([DodgeCar_title])
@@ -142,6 +143,8 @@ def create_world(target_surface):
 
 def game_loop(intro_world, main_world, target_surface):
     gameExit = False
+    end_music = False
+    bgMusicPlaying = False
     clock = pygame.time.Clock()
     global introComplete
     if not introComplete:
@@ -149,15 +152,34 @@ def game_loop(intro_world, main_world, target_surface):
     while not gameExit:
         if introComplete:
             world = main_world
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
             elif event.type == pygame.USEREVENT + 1:
                 introComplete = True
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and introComplete:
+                bgMusicPlaying = False
+                end_music = False
+                print(world.ended)
+                pygame.mixer.music.stop()
                 world = create_world(target_surface)
+                main_world = world
+                print(world.ended)
             else:
                 world.update(event)
+            if introComplete and not bgMusicPlaying:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("assets/music/background/Cyber_Race.ogg")
+                pygame.mixer.music.play(-1)
+                bgMusicPlaying = True
+            if world.ended:
+                if not end_music:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("assets/music/end/Game_End_Fade_Out.ogg")
+                    pygame.mixer.music.play(0)
+                    end_music = True
         world.update(pygame.NOEVENT)
         world.ended = world.detect_collision()
         world.draw(target_surface)
@@ -166,14 +188,17 @@ def game_loop(intro_world, main_world, target_surface):
 
 
 def main():
-    # pygame.mixer.pre_init(44100, 16, 2, 4096)
-    pygame.font.init()
+    pygame.mixer.pre_init()
     pygame.init()
 
     gameDisplay = pygame.display.set_mode((constants.display_width, constants.display_height))
     pygame.display.set_caption("DodgeCar!")
     intro_world = create_intro_world(gameDisplay)
     world = create_world(gameDisplay)
+    pygame.time.set_timer(pygame.USEREVENT + 2, 2000, True)
+    pygame.time.set_timer(pygame.USEREVENT + 3, constants.intro_time_before_countdown, True)
+    pygame.mixer.music.load("assets/music/background/Cyber_Race.ogg")
+    pygame.mixer.music.play(-1)
     game_loop(intro_world, world, gameDisplay)
 
 

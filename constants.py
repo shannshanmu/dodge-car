@@ -1,4 +1,5 @@
 import emoji
+import pygame
 
 display_width = 800
 display_height = 700
@@ -10,9 +11,13 @@ divider_space = 25
 
 
 title_big_text_size = 140
+title_time = 2500
 corner_small_text_size = 25
 instructions_text_size = 80
 instructions_time = 5000
+countdown_time = 750
+countdown_time_together = countdown_time * 4
+intro_time_before_countdown = title_time + instructions_time
 
 
 FasterOneFontPath = "assets/fonts/FasterOne.ttf"
@@ -88,7 +93,6 @@ emojis = [
     minus_or_space,  # pos 14!!!
     exclamation_question_mark,  # pos 15!!!
 ]
-
 
 BLUE = (25, 140, 255)
 DARK_BLUE = (0, 0, 128)

@@ -1,0 +1,22 @@
+CREDITS for music, images, and fonts
+
+This game(, DodgeCar) uses these: 
+
+sounds from freesound.org:
+Cyber_Race.ogg (converted from orig. .mp3) by jammerboy70 (https://freesound.org/people/jammerboy70/sounds/398640/) for the background
+Game_End_Fade_Out.ogg (converted from orig. .mp3) by josepharaoh99 (https://freesound.org/people/josepharaoh99/sounds/364929/) for the end
+321GO.ogg (converted from orig. .mp3) by  steel2008 (https://freesound.org/people/steel2008/sounds/231277/) for the start
+
+images from PinClipart.com: 
+https://www.pinclipart.com/pindetail/ooTbhm_formula-1-clipart-transparent-formula-1-car-top/ (creator unknown)
+
+fonts from various websites:
+1001fonts.com - Pizzadude(Jakob Fischer at jakob@pizzadude.dk, website: http://pizzadude.dk/site/) for EndeavourForever.ttf, found on https://www.1001fonts.com/endeavour-forever-font.html
+              - Tipo (Eduardo Tunni & Dario Manuel Muhafara, website: www.tipo.net.ar) for FasterOne.ttf, found on https://www.1001fonts.com/endeavour-forever-font.html
+
+NotoColorEmoji.ttf : -->
+Noto is a trademark of Google Inc. Noto fonts are open source. 
+All Noto fonts are published under the SIL Open Font License, Version 1.1. 
+Language data and some sample texts are from the Unicode CLDR project.
+
+THIS GAME IS NOT (i repeat, not!) intended for any sort of commercial use. it's just my first game...
