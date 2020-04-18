@@ -11,11 +11,9 @@ else:
 display_width = 800
 display_height = 700
 
-
 divider_width = 25
 divider_height = 150
 divider_space = 25
-
 
 title_big_text_size = 140
 title_time = 2500
@@ -27,8 +25,12 @@ countdown_time_together = countdown_time * 4
 intro_time_before_countdown = title_time + instructions_time
 
 
-FasterOneFontPath = basedir + "/assets/fonts/FasterOne.ttf"
-NotoColorEmojiFontPath = basedir + "/assets/fonts/NotoColorEmoji.ttf"
+def getFilePath(name):
+    return os.path.join(".", basedir, "assets", name)
+
+
+FasterOneFontPath = getFilePath("FasterOne.ttf")
+NotoColorEmojiFontPath = getFilePath("NotoEmoji-Regular.ttf")
 two_arrows_width_together = 475
 # if two arrows are next to each other in one Text_sprite, this is their total width
 
@@ -80,7 +82,6 @@ right_arrow_curving_down = emoji.emojize(":right_arrow_curving_down:", use_alias
 exclamation_question_mark = emoji.emojize(":exclamation_question_mark:", use_aliases=True)
 # U+2796 ➖ :minus: CAN BE USED AS SPACE BAR REPRESENTATION
 minus_or_space = emoji.emojize(":minus:", use_aliases=True)
-
 
 emojis = [
     left_arrow,

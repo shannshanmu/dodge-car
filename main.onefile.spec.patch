@@ -1,9 +1,10 @@
 added_files = [
-         ( 'assets/fonts/*.*', 'assets/fonts' ),
-         ( 'assets/images/cars/flame_decorated_F1_cars_small/*.*', 'assets/images/cars/flame_decorated_F1_cars_small' ),
-         ( 'assets/music/background/*.ogg', 'assets/music/background' ),
-         ( 'assets/music/start/*.ogg', 'assets/music/start' ),
-         ( 'assets/music/end/*.ogg', 'assets/music/end' ),
-         ( 'assets/*.txt', 'assets' ),
-         ( 'assets/music/background/*.*', 'assets/music/background' )
+         ( 'assets/*.*', 'assets' )
+         ]
+
+#for windows
+#install using "pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip"
+added_files = [
+         ( 'assets\\*.*', 'assets' ),
+         ('C:\\Users\\shanmu\\.virtualenvs\\cocos2d\\Lib\\site-packages\\pygame\\*.dll','.')
          ]

@@ -2,13 +2,6 @@ import pygame
 import random
 import pickle
 import constants
-import sys
-import os
-
-if getattr(sys, "frozen", False):
-    basedir = sys._MEIPASS
-else:
-    basedir = os.path.dirname(os.path.abspath(__file__))
 
 
 class World:
@@ -99,7 +92,7 @@ class Intro_world(World):
                     pygame.USEREVENT + 2, self.sequence_sprite[active_sprite_index][0].time, True
                 )
             if active_sprite_index == 2:
-                pygame.mixer.music.load(basedir + "/assets/music/start/321GO.ogg")
+                pygame.mixer.music.load(constants.getFilePath("321GO.ogg"))
                 pygame.mixer.music.play(0)
             if active_sprite_index == len(self.sequence_sprite) - 1:
                 pygame.time.set_timer(
@@ -181,30 +174,30 @@ class Block_sprite(Sprite):
         car_end_y = car.y + car.height
 
         return (
-            (
-                car_start_x <= block_end_x
-                and car_start_x >= block_start_x
-                and car_start_y <= block_end_y
-                and car_start_y >= block_start_y
-            )
-            or (
-                car_end_x >= block_start_x
-                and car_end_x <= block_end_x
-                and car_start_y <= block_end_y
-                and car_start_y >= block_start_y
-            )
-            or (
-                car_end_y <= block_end_y
-                and car_end_y >= block_start_y
-                and car_end_x >= block_start_x
-                and car_end_x <= block_end_x
-            )
-            or (
-                car_end_y <= block_end_y
-                and car_end_y >= block_start_y
-                and car_start_x >= block_start_x
-                and car_start_x <= block_end_x
-            )
+                (
+                        car_start_x <= block_end_x
+                        and car_start_x >= block_start_x
+                        and car_start_y <= block_end_y
+                        and car_start_y >= block_start_y
+                )
+                or (
+                        car_end_x >= block_start_x
+                        and car_end_x <= block_end_x
+                        and car_start_y <= block_end_y
+                        and car_start_y >= block_start_y
+                )
+                or (
+                        car_end_y <= block_end_y
+                        and car_end_y >= block_start_y
+                        and car_end_x >= block_start_x
+                        and car_end_x <= block_end_x
+                )
+                or (
+                        car_end_y <= block_end_y
+                        and car_end_y >= block_start_y
+                        and car_start_x >= block_start_x
+                        and car_start_x <= block_end_x
+                )
         )
 
 
@@ -223,7 +216,7 @@ class Road_sprite(Sprite):
         self.dodged_count = 0
         self.dodged = Text_sprite(
             "Dodged: " + str(0),
-            basedir + "/assets/fonts/FasterOne.ttf",
+            constants.getFilePath("FasterOne.ttf"),
             constants.corner_small_text_size,
             0,
             25,
@@ -237,7 +230,7 @@ class Road_sprite(Sprite):
             self.highscore = 0
         self.global_highscore = Text_sprite(
             "Highscore: " + str(self.highscore),
-            basedir + "/assets/fonts/FasterOne.ttf",
+            constants.getFilePath("FasterOne.ttf"),
             constants.corner_small_text_size,
             0,
             0,
@@ -246,7 +239,7 @@ class Road_sprite(Sprite):
         )
         self.DodgeCar_corner = Text_sprite(
             "DodgeCar",
-            basedir + "/assets/fonts/EndeavourForever.ttf",
+            constants.getFilePath("EndeavourForever.ttf"),
             constants.corner_small_text_size,
             constants.display_width - 140,
             10,
@@ -397,7 +390,9 @@ class Text_sprite(Sprite):
         self.colour = colour
         self.text = text
         self.size = size
-        self.font = pygame.font.Font(str(font), size)
+        print(font)
+        print(type(font))
+        self.font = pygame.font.Font(font, size)
         self.x = x
         self.y = y
         self.type = "text"
